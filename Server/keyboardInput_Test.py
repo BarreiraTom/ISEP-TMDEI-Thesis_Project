@@ -14,7 +14,7 @@ from PyQt5.QtGui import *
 class Ui_Client(object):
     def setupUi(self, Client):
         Client.resize(600, 100)
-        Client.setWindowTitle('Keyboard Window Test')
+        Client.setWindowTitle('Keyboard Input Window Test')
         font = QtGui.QFont()
         font.setFamily("3ds")
         font.setPointSize(40)
