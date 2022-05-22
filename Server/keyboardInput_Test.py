@@ -74,20 +74,17 @@ class mywindow(QMainWindow, Ui_Client):
 
     def keyReleaseEvent(self, event):
 
-        if(event.key() == Qt.Key_W):
-            if not(event.isAutoRepeat()):
+        if not event.isAutoRepeat():
+            if event.key() == Qt.Key_W:
                 print('-W')
                 self.Key_W = False
-        elif(event.key() == Qt.Key_A):
-            if not(event.isAutoRepeat()):
-                print('-A')
-                self.Key_A = False
-        elif(event.key() == Qt.Key_S):
-            if not(event.isAutoRepeat()):
+            elif event.key() == Qt.Key_S:
                 print('-S')
                 self.Key_S = False
-        elif(event.key() == Qt.Key_D):
-            if not(event.isAutoRepeat()):
+            elif event.key() == Qt.Key_A:
+                print('-A')
+                self.Key_A = False
+            elif event.key() == Qt.Key_D:
                 print('-D')
                 self.Key_D = False
 
