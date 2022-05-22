@@ -1,5 +1,5 @@
 import time
-from functionalities.Motor import *
+from Motor import *
 
 
 def main():
