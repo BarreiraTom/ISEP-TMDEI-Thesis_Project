@@ -20,8 +20,8 @@ except Exception:
 
 def callMovement(_leftWheels, _rightWheels):
     try:
-        Motor.PWM.setMotorModel(_leftWheels, _leftWheels,
-                                _rightWheels, _rightWheels)
+        Motor.PWM.setMotorModel(-_leftWheels, -_leftWheels,
+                                -_rightWheels, -_rightWheels)
     except Exception:
         print('Motor not reached')
 
@@ -53,7 +53,6 @@ class Ui_Client(object):
             else:
                 print(btn.text() + " is deselected")
                 self._keyboardInput = False
-				
 
 class mywindow(QtWidgets.QMainWindow, Ui_Client):
     def __init__(self):
