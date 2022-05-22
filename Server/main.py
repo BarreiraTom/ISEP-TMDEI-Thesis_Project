@@ -12,6 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 try:
     import Motor
+    import ADC
 except Exception:
     pass
 
@@ -25,6 +26,13 @@ def callMovement(_leftWheels, _rightWheels):
     except Exception:
         print('Motor not reached')
 
+def getBattery():
+    try:
+        ADC_Power=ADC.recvADC(2)*3
+        return int((float(ADC_Power)-7)/1.40*100)+'%'
+    except Exception:
+        print('Battery not reached')
+        return 'Battery N/A'
 
 class Ui_Client(object):
     def setupUi(self, Client):
@@ -38,10 +46,14 @@ class Ui_Client(object):
         self._keyboardInput = False
 
         self.kBrdInpt = QtWidgets.QCheckBox(Client)
-        self.kBrdInpt.setGeometry(QtCore.QRect(0, 0, 200, 25))
+        self.kBrdInpt.setGeometry(QtCore.QRect(20, 0, 200, 25))
         self.kBrdInpt.setText("Keyboard Input")
         self.kBrdInpt.setChecked(False)
         self.kBrdInpt.stateChanged.connect(lambda:self.buttonHandler(self.kBrdInpt))
+
+        self.battery = QtWidgets.QLabel(Client)
+        self.battery.setGeometry(QtCore.QRect(20, 25, 100, 25))
+        self.battery.setText(getBattery())
 
     def buttonHandler(self, btn):
         print(btn.text() + " button is being handled")
