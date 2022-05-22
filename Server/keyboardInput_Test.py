@@ -2,7 +2,6 @@
 # ONLY WORKS ON LINUX!!!!
 #
 
-from re import U
 import sys
 import time
 
@@ -10,6 +9,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
+
 
 class Ui_Client(object):
     def setupUi(self, Client):
@@ -53,9 +53,7 @@ class mywindow(QMainWindow, Ui_Client):
         self.Key_D = False
 
     def keyPressEvent(self, event):
-        if event.isAutoRepeat():
-            pass
-        else :
+        if not event.isAutoRepeat():
             if event.key() == Qt.Key_W:
                 print('W')
                 self.Key_W = True
@@ -77,21 +75,19 @@ class mywindow(QMainWindow, Ui_Client):
     def keyReleaseEvent(self, event):
 
         if(event.key() == Qt.Key_W):
-            time.sleep(0.05)
-            if(event.key() == Qt.Key_W):
-                if not(event.isAutoRepeat()) and self.Key_W == True:
-                    print('-W')
-                    self.Key_W = False
+            if not(event.isAutoRepeat()):
+                print('-W')
+                self.Key_W = False
         elif(event.key() == Qt.Key_A):
-            if not(event.isAutoRepeat()) and self.Key_A == True:
+            if not(event.isAutoRepeat()):
                 print('-A')
                 self.Key_A = False
         elif(event.key() == Qt.Key_S):
-            if not(event.isAutoRepeat()) and self.Key_S == True:
+            if not(event.isAutoRepeat()):
                 print('-S')
                 self.Key_S = False
         elif(event.key() == Qt.Key_D):
-            if not(event.isAutoRepeat()) and self.Key_D == True:
+            if not(event.isAutoRepeat()):
                 print('-D')
                 self.Key_D = False
 
@@ -99,6 +95,7 @@ class mywindow(QMainWindow, Ui_Client):
         self.A.setVisible(self.Key_A)
         self.S.setVisible(self.Key_S)
         self.D.setVisible(self.Key_D)
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
