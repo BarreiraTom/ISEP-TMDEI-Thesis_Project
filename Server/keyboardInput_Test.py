@@ -57,15 +57,19 @@ class mywindow(QMainWindow, Ui_Client):
             if event.key() == Qt.Key_W:
                 print('W')
                 self.Key_W = True
+                self.Key_S = False
             elif event.key() == Qt.Key_S:
                 print('S')
                 self.Key_S = True
+                self.Key_W = False
             elif event.key() == Qt.Key_A:
                 print('A')
                 self.Key_A = True
+                self.Key_D = False
             elif event.key() == Qt.Key_D:
                 print('D')
                 self.Key_D = True
+                self.Key_A = False
 
         self.W.setVisible(self.Key_W)
         self.A.setVisible(self.Key_A)
