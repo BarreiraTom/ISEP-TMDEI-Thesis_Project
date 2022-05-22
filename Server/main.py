@@ -13,8 +13,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 try:
     import Motor
     import ADC
-except Exception:
-    pass
+except Exception as e:
+    print(e)
 
 # General methods
 
@@ -27,11 +27,13 @@ def callMovement(_leftWheels, _rightWheels):
         print('Motor not reached')
 
 def getBattery():
+    _adc = ADC.Adc()
     try:
-        ADC_Power=ADC.recvADC(2)*3
-        return int((float(ADC_Power)-7)/1.40*100)+'%'
-    except Exception:
+        ADC_Power=_adc.recvADC(2)*3
+        return str(int((float(ADC_Power)-7)/1.40*100))+'%'
+    except Exception as e:
         print('Battery not reached')
+        print(e)
         return 'Battery N/A'
 
 class Ui_Client(object):
