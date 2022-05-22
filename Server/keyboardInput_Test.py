@@ -92,16 +92,16 @@ class mywindow(QMainWindow, Ui_Client):
                 print('-D')
                 self.Key_D = False
 
-        # Check if previous key was still pressed
-        if not event.isAutoRepeat():
-            if event.key() == Qt.Key_W:
-                self.Key_W = True
-            elif event.key() == Qt.Key_S:
-                self.Key_S = True
-            elif event.key() == Qt.Key_A:
-                self.Key_A = True
-            elif event.key() == Qt.Key_D:
-                self.Key_D = True
+#         # Check if previous key was still pressed
+#         if event.isAutoRepeat():
+#             if event.key() == Qt.Key_W and self.Key_W == False:
+#                 self.Key_W = True
+#             elif event.key() == Qt.Key_S and self.Key_S == False:
+#                 self.Key_S = True
+#             elif event.key() == Qt.Key_A and self.Key_A == False:
+#                 self.Key_A = True
+#             elif event.key() == Qt.Key_D and self.Key_D == False:
+#                 self.Key_D = True
 
         self.W.setVisible(self.Key_W)
         self.A.setVisible(self.Key_A)
