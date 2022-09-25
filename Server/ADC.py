@@ -1,5 +1,10 @@
-import smbus
 import time
+try:
+    import smbus
+except Exception as e:
+    print(e)
+
+
 class Adc:
     def __init__(self):
         # Get I2C bus
