@@ -16,7 +16,7 @@ except Exception as e:
 
 # Headset
 try:
-    from live_advance import LiveAdvance
+    import LiveAdvance
 except Exception as e:
     print("Emotiv Headset import failed")
     print(e)
