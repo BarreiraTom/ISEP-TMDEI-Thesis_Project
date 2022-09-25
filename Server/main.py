@@ -16,7 +16,7 @@ except Exception as e:
 
 # Headset
 try:
-    import LiveAdvance
+    from LiveAdvance import LiveAdvance
 except Exception as e:
     print("Emotiv Headset import failed")
     print(e)
@@ -69,13 +69,13 @@ class getBattery(Thread, Dispatcher):
         try:
             _adc = ADC.Adc()
             ADC_Power = _adc.recvADC(2)*3
-            self._batValue = str(int((float(ADC_Power)-7)/1.40*100))+'%'
-            self.emit('batData', data=self._batValue)
+            batValue = str(int((float(ADC_Power)-7)/1.40*100))+'%'
+            self.emit('batData', data=batValue)
         except Exception as e:
             print('Battery not reached')
             print(e)
-            self._batValue = 'N/A'
-            self.emit('batData', data=self._batValue)
+            batValue = 'N/Ad'
+            self.emit('batData', data=batValue)
 
 
 # MAIN Class
@@ -88,8 +88,6 @@ class Ui_Client(object):
         font.setPointSize(12)
         Client.setFont(font)
 
-        # self._battery = Thread(target=getBattery)
-        # self._battery.start()
         self._battery = getBattery()
         self._battery.bind(batData=self.on_bat_change)
         self._battery.start()
@@ -100,7 +98,6 @@ class Ui_Client(object):
         self._brainHandler.bind(brainData=self.on_new_brain_data)
         self._brainHandler.start()
         self._brainValue = '---'
-
 
         self.kBrdInpt = QtWidgets.QCheckBox(Client)
         self.kBrdInpt.setGeometry(QtCore.QRect(20, 0, 150, 25))
@@ -117,7 +114,7 @@ class Ui_Client(object):
             lambda: self.buttonHandler(self.brainInpt))
 
         self.battery = QtWidgets.QLabel(Client)
-        self.battery.setGeometry(QtCore.QRect(20, 25, 100, 25))
+        self.battery.setGeometry(QtCore.QRect(20, 25, 150, 25))
         self.battery.setText('Battery: ' + str(self._batValue))
 
         self.brnShow = QtWidgets.QLabel(Client)
@@ -125,27 +122,27 @@ class Ui_Client(object):
         self.brnShow.setText('TEST: ' + str(self._brainValue))
 
     def on_bat_change(self, *args, **kwargs):
-        self._batValue = kwargs.get('data')
-        self.battery.setText('Battery: ' + str(self._batValue))
+        self._batValue = str(kwargs.get('data'))
 
     def on_new_brain_data(self, *args, **kwargs):
         self._brainValue = kwargs.get('data')
         self.brnShow.setText('Direction: ' + str(self._brainValue['action']))
 
-        if self._brainValue['action'] == 'push':
-            self._leftWheels = 1000
-            self._rightWheels = 1000
-        elif self._brainValue['action'] == 'pull':
-            self._leftWheels = -1000
-            self._rightWheels = -1000
-        elif self._brainValue['action'] == 'left':
-            self._leftWheels = -1500
-            self._rightWheels = 2000
-        elif self._brainValue['action'] == 'right':
-            self._leftWheels = 2000
-            self._rightWheels = -1500
+        if self._brainInput:
+            if self._brainValue['action'] == 'push':
+                self._leftWheels = 1000
+                self._rightWheels = 1000
+            elif self._brainValue['action'] == 'pull':
+                self._leftWheels = -1000
+                self._rightWheels = -1000
+            elif self._brainValue['action'] == 'left':
+                self._leftWheels = -1500
+                self._rightWheels = 2000
+            elif self._brainValue['action'] == 'right':
+                self._leftWheels = 2000
+                self._rightWheels = -1500
 
-        callMovement(self._leftWheels, self._rightWheels)
+            callMovement(self._leftWheels, self._rightWheels)
 
     def buttonHandler(self, btn):
         print(btn.text() + " button is being handled")
