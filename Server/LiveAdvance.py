@@ -285,8 +285,8 @@ class LiveAdvance(Dispatcher):
 # def main():
 
 #     # Please fill your application clientId and clientSecret before running script
-#     your_app_client_id = 'n1cp8DzqFzxLDEIFsy76xSXHuzix2m4aJv78ATox'
-#     your_app_client_secret = 'RvPDBuAwFHynFd3RWcDcLP4kVhhmEs0VMPXMNPrjvPWOUEbLanqp4xHjPYAI7akOSYuNzigjGcIax0TastHlU5ikw84NDYP61nJkwYJ9X8mBs8ReMP61PEaTbM6xK5PK'
+#     your_app_client_id = ''
+#     your_app_client_secret = ''
 
 #     # Init live advance
 #     l = LiveAdvance(your_app_client_id, your_app_client_secret)
