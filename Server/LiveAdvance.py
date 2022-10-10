@@ -291,7 +291,7 @@ class LiveAdvance(Dispatcher):
 #     # Init live advance
 #     l = LiveAdvance(your_app_client_id, your_app_client_secret)
 
-#     trained_profile_name = 'Tomas' # Please set a trained profile name here
+#     trained_profile_name = 'ISEP_TMDEI' # Please set a trained profile name here
 #     l.start(trained_profile_name)
 
 # if __name__ =='__main__':

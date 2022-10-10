@@ -1,6 +1,3 @@
-#
-# ONLY WORKS ON LINUX!!!!
-#
 import sys
 from threading import Thread
 from PyQt5 import QtCore, QtGui, QtWidgets
@@ -30,6 +27,7 @@ def callMovement(_leftWheels, _rightWheels):
     except Exception:
         print('Motor not reached')
 
+
 class emotivHandler(Thread, Dispatcher):
 
     _events_ = ['brainData']
@@ -43,7 +41,7 @@ class emotivHandler(Thread, Dispatcher):
 
                 self.c_client_id = clt.split('\n')[0]
                 self.c_client_secret = clt.split('\n')[1]
-                self.c_profile_name = 'Tomas'
+                self.c_profile_name = 'ISEP_TMDEI'
             except Exception as e:
                 raise ValueError(
                     '\nThere is missing information about the client data. \nPlease insert the client id and client secret in a file named "cortexClient.txt" respectively in separate lines. Then restart the app')
@@ -74,7 +72,7 @@ class getBattery(Thread, Dispatcher):
         except Exception as e:
             print('Battery not reached')
             print(e)
-            batValue = 'N/Ad'
+            batValue = 'N/A'
             self.emit('batData', data=batValue)
 
 
@@ -93,7 +91,8 @@ class Ui_Client(object):
         self._battery.start()
         self._batValue = '---'
         self._keyboardInput = False
-        self._brainInput = False
+        self._brainInput = True
+        self._lastMovement = ''
         self._brainHandler = emotivHandler()
         self._brainHandler.bind(brainData=self.on_new_brain_data)
         self._brainHandler.start()
@@ -109,7 +108,7 @@ class Ui_Client(object):
         self.brainInpt = QtWidgets.QCheckBox(Client)
         self.brainInpt.setGeometry(QtCore.QRect(170, 0, 150, 25))
         self.brainInpt.setText("Brainwave Input")
-        self.brainInpt.setChecked(False)
+        self.brainInpt.setChecked(True)
         self.brainInpt.stateChanged.connect(
             lambda: self.buttonHandler(self.brainInpt))
 
@@ -118,8 +117,8 @@ class Ui_Client(object):
         self.battery.setText('Battery: ' + str(self._batValue))
 
         self.brnShow = QtWidgets.QLabel(Client)
-        self.brnShow.setGeometry(QtCore.QRect(20, 45, 500, 25))
-        self.brnShow.setText('TEST: ' + str(self._brainValue))
+        self.brnShow.setGeometry(QtCore.QRect(20, 50, 500, 25))
+        self.brnShow.setText('Direction: ' + str(self._brainValue))
 
     def on_bat_change(self, *args, **kwargs):
         self._batValue = str(kwargs.get('data'))
@@ -128,7 +127,9 @@ class Ui_Client(object):
         self._brainValue = kwargs.get('data')
         self.brnShow.setText('Direction: ' + str(self._brainValue['action']))
 
-        if self._brainInput:
+        if self._brainInput and self._brainValue['action'] != self._lastMovement:
+            self._lastMovement = self._brainValue['action']
+
             if self._brainValue['action'] == 'push':
                 self._leftWheels = 1000
                 self._rightWheels = 1000
@@ -141,6 +142,9 @@ class Ui_Client(object):
             elif self._brainValue['action'] == 'right':
                 self._leftWheels = 2000
                 self._rightWheels = -1500
+            elif self._brainValue['action'] == 'neutral':
+                self._leftWheels = 0
+                self._rightWheels = 0
 
             callMovement(self._leftWheels, self._rightWheels)
 

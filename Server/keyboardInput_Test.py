@@ -1,7 +1,3 @@
-#
-# ONLY WORKS ON LINUX!!!!
-#
-
 import sys
 import time
 
