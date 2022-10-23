@@ -1,3 +1,0 @@
-source setup.sh
-
-pip install pyQt5
